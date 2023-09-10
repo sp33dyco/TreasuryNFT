@@ -10,7 +10,7 @@ const FIREBLOCKS_API_KEY = '534ce01f-5d2e-49d4-a21d-137eb06e41eb'; // Replace wi
 
 app.post('/authorize-fireblocks', async (req, res) => {
   try {
-    const response = await axios.post('https://api.fireblocks.io/v1/wallets', {}, {
+    const response = await axios.post('https://sandbox-api.fireblocks.io/v1/wallets', {}, {
       headers: {
         'X-API-Key': FIREBLOCKS_API_KEY,
       },
