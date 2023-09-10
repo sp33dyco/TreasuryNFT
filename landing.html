@@ -5,10 +5,24 @@
     <meta name='viewport' content='width=device-width, initial-scale=1, shrink-to-fit=no'>
     <link href='https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css' rel='stylesheet'>
     <title>Landing Page</title>
+
+    <style>
+        .container {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+        }
+        .button {
+          margin-bottom: 10px; /* Adjust as needed */
+        }
+      </style>
+
 </head>
 <body class='d-flex justify-content-center align-items-center vh-100'>
-    <button class='btn btn-primary' style='font-size: 20px;' id="authorize-button">Connect your wallet</button>
-
+    <div class="container">
+        <button class="button" class='btn btn-primary' style='font-size: 20px;' id="authorize-button">Connect your wallet</button>
+        <label id="asset">Total Assets</label>
+      </div>
 
 <script>
   document.getElementById('authorize-button').addEventListener('click', async () => {
@@ -19,6 +33,14 @@
       const data = await response.json();
       console.log('Wallet authorized:', data);
       alert('Wallet authorized. Check console for details.');
+     
+      var assetContent = ''
+      for(let i=0;i<data.accounts[0].assets.length;i++){
+        assetContent += data.accounts[0].assets[i].id + ' = ' + data.accounts[0].assets[i].balance.toString() + '  ';
+      }
+      console.log(assetContent);
+
+      document.getElementById('asset').textContent = assetContent;
     } catch (error) {
       console.error('Error authorizing wallet:', error);
       alert('Error authorizing wallet. Check console for details.');
