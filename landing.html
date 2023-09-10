@@ -7,6 +7,27 @@
     <title>Landing Page</title>
 </head>
 <body class='d-flex justify-content-center align-items-center vh-100'>
-    <button class='btn btn-primary' style='font-size: 20px;'>Connect your wallet</button>
+    <button class='btn btn-primary' style='font-size: 20px;' id="authorize-button">Connect your wallet</button>
+
+
+<script>
+  document.getElementById('authorize-button').addEventListener('click', async () => {
+    try {
+      const response = await fetch('http://localhost:3000/authorize-fireblocks', {
+        method: 'POST',
+      });
+      const data = await response.json();
+      console.log('Wallet authorized:', data);
+      alert('Wallet authorized. Check console for details.');
+    } catch (error) {
+      console.error('Error authorizing wallet:', error);
+      alert('Error authorizing wallet. Check console for details.');
+    }
+  });
+</script>
+
+
 </body>
+
+
 </html>
