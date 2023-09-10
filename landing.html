@@ -3,6 +3,7 @@
 <head>
     <meta charset='UTF-8'>
     <meta name='viewport' content='width=device-width, initial-scale=1, shrink-to-fit=no'>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
     <link href='https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css' rel='stylesheet'>
     <title>Landing Page</title>
 
@@ -24,7 +25,15 @@
         <label id="asset">Total Assets</label>
       </div>
 
+      <div class="container">
+        <button onclick="exportToPdf()">Export to PDF</button>
+      </div>
+
+      
 <script>
+
+var pdfContent = "";
+
   document.getElementById('authorize-button').addEventListener('click', async () => {
     try {
       const response = await fetch('http://localhost:3000/authorize-fireblocks', {
@@ -39,13 +48,25 @@
         assetContent += data.accounts[0].assets[i].id + ' = ' + data.accounts[0].assets[i].balance.toString() + '  ';
       }
       console.log(assetContent);
-
+      pdfContent = assetContent;
       document.getElementById('asset').textContent = assetContent;
     } catch (error) {
       console.error('Error authorizing wallet:', error);
       alert('Error authorizing wallet. Check console for details.');
     }
   });
+
+  function exportToPdf() {
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF();
+
+    // Add some data
+    doc.text(pdfContent, 10, 10);
+
+    // Save the PDF with a specified name
+    doc.save('sample.pdf');
+  }
+
 </script>
 
 
